@@ -1,0 +1,161 @@
+<?php include 'includes/header.php'; ?>
+
+<?php
+$serviceImages = [];
+
+$serviceImageQuery = $conn->query("SELECT image FROM gallery
+    WHERE status = 'active' ORDER BY display_order ASC, created_at DESC LIMIT 3");
+
+if ($serviceImageQuery) {
+    while ($image = $serviceImageQuery->fetch_assoc()) {
+        $serviceImages[] = $image['image'];
+    }
+}
+?>
+
+<main class="services-page">
+    <!-- PAGE INTRO -->
+    <section class="page-intro services-intro">
+        <div class="section-number">
+            <span>01</span>
+            <span>WHAT WE DO</span>
+        </div>
+
+        <h1>Crafted for<br>your occasion.</h1>
+        <p>
+            From distinctive native wear to the details that
+            complete the look, Boka Nation creates pieces
+            designed around the individual.
+        </p>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="services-list-page">
+        <article class="service-detail">
+            <div class="service-detail-number">
+                01
+            </div>
+
+            <div class="service-detail-image">
+               <?php if (!empty($serviceImages[0])): ?>
+
+            <img src="uploads/gallery/<?= htmlspecialchars($serviceImages[0]); ?>" alt="Boka Nation native wear">
+            <?php endif; ?>
+            </div>
+
+            <div class="service-detail-content">
+                <span>01 / MENSWEAR</span>
+
+                <h2>Native<br>Wear</h2>
+                <p>
+                    Contemporary Nigerian native wear created
+                    with attention to proportion, fabric,
+                    construction and finishing.
+                </p>
+
+                <p>
+                    Whether for everyday style, special occasions
+                    or important events, each piece is designed
+                    to make a strong impression.
+                </p>
+
+                <a href="contact.php" class="text-link">
+                    Discuss your piece
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </article>
+
+        <article class="service-detail service-detail-reverse">
+            <div class="service-detail-number">
+                02
+            </div>
+            <div class="service-detail-image">
+              <?php if (!empty($serviceImages[1])): ?>
+
+            <img src="uploads/gallery/<?= htmlspecialchars($serviceImages[1]); ?>" alt="Boka Nation footwear">
+                <?php endif; ?>
+            </div>
+
+            <div class="service-detail-content">
+                <span>02 / FOOTWEAR</span>
+
+                <h2>Complete<br>The Look</h2>
+                <p>
+                    Selected footwear that complements the
+                    Boka Nation wardrobe and brings the complete
+                    look together.
+                </p>
+
+                <a href="contact.php" class="text-link">
+                    Enquire about footwear
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </article>
+
+        <article class="service-detail">
+            <div class="service-detail-number">
+                03
+            </div>
+            <div class="service-detail-image">
+               <?php if (!empty($serviceImages[2])): ?>
+
+            <img src="uploads/gallery/<?= htmlspecialchars($serviceImages[2]); ?>" alt="Boka Nation caps and accessories">
+            <?php endif; ?>
+            </div>
+            <div class="service-detail-content">
+                <span>03 / ACCESSORIES</span>
+                <h2>The Final<br>Detail</h2>
+                <p>
+                    Caps and carefully selected accessories
+                    that add character and complete the
+                    overall Boka Nation aesthetic.
+                </p>
+
+                <a href="contact.php" class="text-link">
+                    Explore accessories
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+
+            </div>
+        </article>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section class="service-experience">
+        <div class="section-number">
+            <span>02</span>
+            <span>THE BOKA EXPERIENCE</span>
+        </div>
+        <div class="experience-content">
+            <h2>More than<br>what you wear.</h2>
+
+            <div class="experience-text">
+                <p>
+                    The right piece is about more than appearance.
+                    It is about how it fits into your personality,
+                    your occasion and your individual sense of style.
+                </p>
+
+                <p>
+                    At Boka Nation, every detail contributes to
+                    creating a complete and considered look.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="services-cta">
+        <p>HAVE SOMETHING IN MIND?</p>
+
+        <h2>Let's talk<br>about it.</h2>
+        <a href="contact.php" class="hero-button">
+            Get in Touch
+            <i class="fa-solid fa-arrow-right"></i>
+        </a>
+    </section>
+</main>
+
+<?php include 'includes/footer.php'; ?>

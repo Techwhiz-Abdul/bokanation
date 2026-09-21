@@ -1,0 +1,237 @@
+<?php
+
+include 'includes/header.php';
+
+$featuredCollections = getFeaturedCollections($conn);
+$featuredGallery = getFeaturedGallery($conn);
+$settings = getSettings($conn);
+
+?>
+
+
+<main>
+    <!-- Hero will go here -->
+     <section class="hero">
+    <div class="hero-image">
+        <img src="assets/images/hero.jpg" alt="Boka Nation menswear">
+    </div>
+
+    <div class="hero-content">
+        <p class="hero-label">BOKA NATION</p>
+        <h1>Nigerian Menswear,<br>Made With Character.</h1>
+        <p class="hero-text">Explore our collection of contemporary native wear, footwear and accessories.</p>
+
+        <a href="collections.php" class="hero-button">
+            Explore Collection
+            <i class="fa-solid fa-arrow-right"></i>
+        </a>
+    </div>
+</section>
+
+    <!-- Brand introduction will go here -->
+     <section class="brand-intro">
+    <div class="intro-label">
+        <span>01</span>
+        <span>THE BRAND</span>
+    </div>
+
+
+    <div class="intro-content">
+        <div class="intro-heading">
+            <p>ABOUT BOKA NATION</p>
+            <h2>Traditional roots.<br>Modern expression.</h2>
+        </div>
+
+        <div class="intro-description">
+            <p>
+                Boka Nation is a Nigerian menswear brand focused on
+                refined native wear and carefully selected accessories.
+                Each piece is made with attention to fit, fabric and detail.
+            </p>
+
+            <a href="about.php" class="text-link">
+                Discover the brand
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+    <!-- Featured collections will go here -->    
+<section class="featured-collections">
+    <div class="section-heading">
+        <div class="section-number">
+            <span>02</span>
+            <span>COLLECTIONS</span>
+        </div>
+        <div class="heading-row">
+
+            <h2>Selected<br>Pieces</h2>
+            <a href="collections.php" class="view-all">
+                View all collections
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="collection-grid">
+        <?php if ($featuredCollections && $featuredCollections->num_rows > 0): ?>
+            <?php $index = 1; ?>
+            <?php while ($collection = $featuredCollections->fetch_assoc()): ?>
+                <a href="collections.php" class="collection-card <?= $index === 1 ? 'collection-large' : ''; ?>">
+                    <div class="collection-image">
+                        <?php if (!empty($collection['cover_image'])): ?>
+                            <img
+                                src="uploads/collections/<?= htmlspecialchars($collection['cover_image']); ?>"
+                                alt="<?= htmlspecialchars($collection['name']); ?>">
+                        <?php else: ?>
+                            <div class="collection-image-placeholder">
+                                <span>No image available</span>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+
+                    <div class="collection-info">
+                        <div>
+                            <span><?= str_pad($index, 2, '0', STR_PAD_LEFT); ?></span>
+                            <h3><?= htmlspecialchars($collection['name']); ?></h3>
+                        </div>
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </div>
+                </a>
+                <?php $index++; ?>
+            <?php endwhile; ?>
+        <?php else: ?>
+            <div class="collections-empty">
+
+                <h3>Collections Coming Soon</h3>
+                <p>
+                    Boka Nation's featured collections will
+                    appear here once they are added.
+                </p>
+            </div>
+        <?php endif; ?>
+    </div>
+</section>
+
+    <!-- Services will go here -->
+    <section class="services-section">
+    <div class="section-number">
+        <span>04</span>
+        <span>WHAT WE OFFER</span>
+    </div>
+
+    <div class="services-heading">
+        <h2>Made for the<br>way you dress.</h2>
+        <p>
+            From carefully made native wear to the finishing
+            details that complete the look, explore what
+            Boka Nation offers.
+        </p>
+    </div>
+
+    <div class="services-list">
+        <a href="contact.php" class="service-item">
+            <div class="service-number">
+                01
+            </div>
+
+            <div class="service-name">
+                <h3>Native Wear</h3>
+                <p>
+                    Refined traditional pieces made with
+                    attention to fit, fabric and detail.
+                </p>
+            </div>
+
+            <div class="service-arrow">
+                <i class="fa-solid fa-arrow-right"></i>
+            </div>
+        </a>
+
+        <a href="contact.php" class="service-item">
+            <div class="service-number">
+                02
+            </div>
+            <div class="service-name">
+                <h3>Footwear</h3>
+                <p>
+                    Selected footwear designed to complement
+                    the Boka Nation look.
+                </p>
+            </div>
+
+            <div class="service-arrow">
+                <i class="fa-solid fa-arrow-right"></i>
+            </div>
+        </a>
+
+        <a href="contact.php" class="service-item">
+            <div class="service-number">
+                03
+            </div>
+
+            <div class="service-name">
+                <h3>Caps & Accessories</h3>
+                <p>
+                    Finishing pieces that bring the complete
+                    look together.
+                </p>
+            </div>
+
+            <div class="service-arrow">
+                <i class="fa-solid fa-arrow-right"></i>
+            </div>
+        </a>
+    </div>
+</section>
+
+    <!-- Social / contact section will go here -->
+     <section class="contact-section">
+    <div class="contact-image">
+        <img src="assets/images/contact-image.jpg" alt="Boka Nation menswear">
+    </div>
+
+    <div class="contact-content">
+        <div class="section-number">
+            <span>05</span>
+            <span>GET IN TOUCH</span>
+        </div>
+        <h2>Let's create<br>something distinctive.</h2>
+        <p>
+            Looking for a custom piece, interested in our
+            collections, or simply want to know more about
+            Boka Nation? Get in touch with us.
+        </p>
+
+        <div class="contact-actions">
+
+           <?php if (!empty($settings['whatsapp'])): ?>
+                    <a href="https://wa.me/<?= preg_replace('/[^0-9]/', '', $settings['whatsapp']); ?>"
+                    class="contact-button primary"
+                        target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+                        <i class="fa-brands fa-whatsapp"></i>
+                        WhatsApp Us
+                    </a>
+
+            <?php endif; ?>
+
+            <?php if (!empty($settings['instagram'])): ?>
+                <a href="<?= htmlspecialchars($settings['instagram']); ?>"
+                class="contact-button secondary"
+                target="_blank"
+                rel="noopener noreferrer">
+                    <i class="fa-brands fa-instagram"></i>
+                    Instagram
+                </a>
+            <?php endif; ?>
+
+        </div>
+
+
+    </div>
+</section>
+</main>
+
+
+<?php include 'includes/footer.php'; ?>

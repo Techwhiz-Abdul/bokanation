@@ -1,0 +1,93 @@
+<?php include 'includes/header.php'; ?>
+
+<?php
+$gallery = getGallery($conn);
+
+$galleryItems = [];
+
+if ($gallery) {
+    while ($item = $gallery->fetch_assoc()) {
+        $galleryItems[] = $item;
+    }
+}
+
+$galleryClasses = ['gallery-item gallery-item-large', 'gallery-item',
+    'gallery-item', 'gallery-item gallery-item-tall', 'gallery-item',
+    'gallery-item gallery-item-wide'];
+?>
+
+<main class="gallery-page">
+    <!-- PAGE INTRO -->
+    <section class="page-intro gallery-intro">
+        <div class="section-number">
+            <span>01</span>
+            <span>LOOKBOOK</span>
+        </div>
+
+        <h1>A closer look<br>at Boka Nation.</h1>
+        <p>Explore selected looks, details and pieces from the Boka Nation collection.</p>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="gallery-section">
+        <div class="gallery-top">
+            <div>
+                <span class="gallery-label">THE COLLECTION</span>
+                <h2>Selected<br>Looks</h2>
+            </div>
+
+            <p>Explore the details, silhouettes and styling that define the Boka Nation aesthetic.</p>
+        </div>
+
+        <div class="gallery-grid">
+         <?php if (!empty($galleryItems)): ?>
+          <?php foreach ($galleryItems as $index => $item): ?>
+            <?php
+                $position = $index + 1;
+                // Use the existing design classes for the first 6 positions.
+                $itemClass = $galleryClasses[$index] ?? 'gallery-item';
+            ?>
+
+            <a href="gallery.php" class="<?= $itemClass; ?>">
+                <img src="uploads/gallery/<?= htmlspecialchars($item['image']); ?>"
+                    alt="<?= htmlspecialchars(!empty($item['caption']) ? $item['caption'] : 'Boka Nation fashion look'
+                    ); ?>">
+
+                <div class="gallery-overlay">
+                    <span><?= str_pad($position, 2, '0', STR_PAD_LEFT); ?></span>
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </div>
+
+            </a>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <div class="gallery-empty">
+            <h3>Lookbook Coming Soon</h3>
+            <p>Boka Nation's latest looks will be showcased here.</p>
+        </div>
+    <?php endif; ?>
+</div>
+</section>
+
+
+    <!-- INSTAGRAM CTA -->
+    <section class="gallery-cta">
+        <div class="section-number">
+            <span>02</span>
+            <span>FOLLOW THE BRAND</span>
+        </div>
+
+        <h2>More from<br>Boka Nation.</h2>
+        <p>Discover more looks, new pieces and updates through our social pages.</p>
+
+       
+        <?php if (!empty($settings['instagram'])): ?>
+             <a href="<?= htmlspecialchars($settings['instagram']); ?>"
+              class="hero-button" target="_blank" rel="noopener noreferrer">
+              Follow on Instagram  
+              <i class="fa-brands fa-instagram"></i>
+            </a>
+        <?php endif; ?>
+    </section>
+</main>
+<?php include 'includes/footer.php'; ?>
